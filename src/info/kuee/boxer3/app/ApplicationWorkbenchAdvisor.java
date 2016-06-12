@@ -1,4 +1,4 @@
-package info.kuee.boxer3.intro;
+package info.kuee.boxer3.app;
 
 import org.eclipse.ui.application.IWorkbenchConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;

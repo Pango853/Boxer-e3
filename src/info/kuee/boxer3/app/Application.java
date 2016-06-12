@@ -1,4 +1,4 @@
-package info.kuee.boxer3.intro;
+package info.kuee.boxer3.app;
 
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;

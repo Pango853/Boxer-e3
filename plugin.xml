@@ -7,14 +7,14 @@
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
-               class="info.kuee.boxer3.intro.Application">
+               class="info.kuee.boxer3.app.Application">
          </run>
       </application>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="RCP Perspective"
+            name="Default"
             class="info.kuee.boxer3.intro.Perspective"
             id="info.kuee.boxer3.perspective">
       </perspective>
@@ -56,6 +56,63 @@
             </implementation>
          </presentation>
       </config>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu?before=additions">
+         <menu
+               label="File">
+            <menu
+                  label="New">
+               <command
+                     commandId="info.kuee.boxer3.commandNewFolder"
+                     label="New Folder"
+                     style="push">
+               </command>
+            </menu>
+            <separator
+                  name="Boxer3.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.file.exit"
+                  label="Exit"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               label="Settings">
+            <command
+                  commandId="info.kuee.boxer3.commandAuth"
+                  label="Authenication"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="info.kuee.boxer3.commandNewFolder"
+            name="New Folder">
+      </command>
+      <command
+            id="info.kuee.boxer3.commandAuth"
+            name="Authentication">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="info.kuee.boxer3.handlers.NewFolderHandler"
+            commandId="info.kuee.boxer3.commandNewFolder">
+      </handler>
+      <handler
+            class="info.kuee.boxer3.handlers.AuthHandler"
+            commandId="info.kuee.boxer3.commandAuth">
+      </handler>
    </extension>
 
 </plugin>

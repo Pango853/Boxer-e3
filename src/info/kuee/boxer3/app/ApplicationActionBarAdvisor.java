@@ -1,5 +1,6 @@
-package info.kuee.boxer3.intro;
+package info.kuee.boxer3.app;
 
+import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.ui.actions.ActionFactory;
@@ -25,6 +26,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	protected void fillMenuBar(IMenuManager menuBar) {
 		
 		MenuManager helpMenu = new MenuManager("&Help", IWorkbenchActionConstants.M_HELP);
+		menuBar.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
 		menuBar.add(helpMenu);
 
 		// Help

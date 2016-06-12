@@ -1,4 +1,4 @@
-package info.kuee.boxer3.intro;
+package info.kuee.boxer3.app;
 
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.application.ActionBarAdvisor;
@@ -18,9 +18,10 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     
     public void preWindowOpen() {
         IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
-        configurer.setInitialSize(new Point(700, 550));
-        configurer.setShowCoolBar(false);
-        configurer.setShowStatusLine(false);
+        configurer.setInitialSize(new Point(800, 600));
+        configurer.setShowCoolBar(true);
+        configurer.setShowStatusLine(true);
+        configurer.setShowPerspectiveBar(true);
         configurer.setTitle("Boxer");
     }
 }

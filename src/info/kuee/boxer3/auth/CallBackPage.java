@@ -10,20 +10,20 @@ import javax.servlet.http.HttpServletResponse;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxWebAuth;
 
-public class AuthCallback extends HttpServlet {
+public class CallBackPage extends HttpServlet {
 
 	private static final long serialVersionUID = -4459662300795783870L;
 
-	public AuthCallback() {}
+	public CallBackPage() {}
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		try {
-			DropboxAuth.finish(request);
+			AuthUtil.finish(request);
 
 			response.setContentType("text/html; charset=UTF-8");
-			response.getWriter().println("Hello, " + DropboxAuth.getClient().getAccountInfo().displayName + "! Authorization complete.");
+			response.getWriter().println("Hello, " + AuthUtil.getClient().getAccountInfo().displayName + "! Authorization complete.");
 		} catch (DbxException ex) {
 			System.err.println("Error in DbxWebAuth.authorize: " + ex.getMessage());
 			response.setContentType("text/html; charset=UTF-8");

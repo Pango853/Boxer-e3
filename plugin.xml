@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-
    <extension
          id="application"
          point="org.eclipse.core.runtime.applications">
@@ -20,9 +19,9 @@
             name="Default">
       </perspective>
       <perspective
-            class="info.kuee.boxer3.intro.FilePerspective"
-            id="info.kuee.boxer3.perspectiveFile"
-            name="File">
+            class="info.kuee.boxer3.intro.ExplorerPerspective"
+            id="info.kuee.boxer3.perspectiveExplorer"
+            name="Explorer">
       </perspective>
    </extension>
    <extension
@@ -34,6 +33,10 @@
          <property
                name="windowImages"
                value="icons/alt_window_16.gif,icons/alt_window_32.gif">
+         </property>
+         <property
+               name="appName"
+               value="Boxer">
          </property>
       </product>
    </extension>
@@ -97,6 +100,23 @@
             </command>
          </menu>
       </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:info.kuee.boxer3.viewExplorer">
+         <command
+               commandId="info.kuee.boxer3.commandUpload"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/import_wiz.gif"
+               label="Upload"
+               style="push"
+               tooltip="Upload">
+         </command>
+         <command
+               commandId="info.kuee.boxer3.commandDownload"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/save_edit.gif"
+               label="Download"
+               style="push">
+         </command>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -107,6 +127,16 @@
       <command
             id="info.kuee.boxer3.commandAuth"
             name="Authentication">
+      </command>
+      <command
+            defaultHandler="info.kuee.boxer3.handlers.UploadHandler"
+            id="info.kuee.boxer3.commandUpload"
+            name="Upload">
+      </command>
+      <command
+            defaultHandler="info.kuee.boxer3.handlers.DownloadHandler"
+            id="info.kuee.boxer3.commandDownload"
+            name="Download">
       </command>
    </extension>
    <extension
@@ -123,15 +153,16 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="info.kuee.boxer3.views.FileView"
-            id="info.kuee.boxer3.viewFile"
-            name="File"
+            allowMultiple="true"
+            class="info.kuee.boxer3.ui.views.FileView"
+            id="info.kuee.boxer3.viewExplorer"
+            name="Explorer"
             restorable="true">
       </view>
       <view
-            class="info.kuee.boxer3.views.BrowserView"
-            id="info.kuee.boxer3.viewOAuthBrowser"
-            name="OAth Browser"
+            class="info.kuee.boxer3.ui.views.AccountView"
+            id="info.kuee.boxer3.viewAccount"
+            name="Account"
             restorable="true">
       </view>
    </extension>
@@ -140,7 +171,7 @@
       <perspectiveExtension
             targetID="info.kuee.boxer3.perspective">
             <view
-                  id="info.kuee.boxer3.viewOAuthBrowser"
+                  id="info.kuee.boxer3.viewAccount"
                   minimized="false"
                   moveable="false"
                   ratio="0.75"
@@ -158,9 +189,9 @@
             </view>
       </perspectiveExtension>
       <perspectiveExtension
-            targetID="info.kuee.boxer3.perspectiveFile">
+            targetID="info.kuee.boxer3.perspectiveExplorer">
             <view
-                  id="info.kuee.boxer3.viewFile"
+                  id="info.kuee.boxer3.viewExplorer"
                   minimized="false"
                   moveable="false"
                   relationship="top"

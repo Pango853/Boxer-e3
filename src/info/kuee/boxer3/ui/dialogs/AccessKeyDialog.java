@@ -1,6 +1,5 @@
-package info.kuee.boxer3.dialogs;
+package info.kuee.boxer3.ui.dialogs;
 
-import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
@@ -13,18 +12,20 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.osgi.service.prefs.BackingStoreException;
-import org.osgi.service.prefs.Preferences;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import info.kuee.boxer3.Activator;
+import info.kuee.boxer3.auth.AuthUtil;
+import info.kuee.boxer3.auth.AuthUtil.AccessKeyPair;
+import info.kuee.boxer3.util.Error;
 
-public class AuthPreferenceDialog extends TitleAreaDialog {
-	public static final String PREF_KEY_AUTH_SECRETKEY = "auth.secret.key";
-	public static final String PREF_KEY_AUTH_ACCESSKEY = "auth.access.key";
+public class AccessKeyDialog extends TitleAreaDialog {
+	private static final Logger logger = LoggerFactory.getLogger(AccessKeyDialog.class);
+
 	private FieldEditorPreferencePage prefPage;
-	private String accessKey, secretKey;
 	private StringFieldEditor accessKeyField, secretKeyField;
 
-	public AuthPreferenceDialog(Shell parentShell) {
+	public AccessKeyDialog(Shell parentShell) {
 		super(parentShell);
 	}
 
@@ -47,10 +48,7 @@ public class AuthPreferenceDialog extends TitleAreaDialog {
 		layout.marginRight = 10;
 		area.layout();
 
-		Preferences pref = ConfigurationScope.INSTANCE.getNode(Activator.PLUGIN_ID);
-		accessKey = pref.get(PREF_KEY_AUTH_ACCESSKEY, "ACCESS_KEY");
-		secretKey = pref.get(PREF_KEY_AUTH_SECRETKEY, "SECRET_KEY");
-
+		AccessKeyPair keyPair = AuthUtil.getAccessKeyPair();
 		prefPage = new FieldEditorPreferencePage(FieldEditorPreferencePage.GRID) {
 			@Override
 			public void createControl(Composite parent) {
@@ -60,11 +58,11 @@ public class AuthPreferenceDialog extends TitleAreaDialog {
 
 			@Override
 			protected void createFieldEditors() {
-				accessKeyField = new StringFieldEditor(PREF_KEY_AUTH_ACCESSKEY, "Access key：", getFieldEditorParent());
-				accessKeyField.setStringValue(accessKey);
+				accessKeyField = new StringFieldEditor(AuthUtil.PREF_KEY_AUTH_ACCESSKEY, "Access key：", getFieldEditorParent());
+				accessKeyField.setStringValue(keyPair.AccessKey);
 				addField(accessKeyField);
 
-				secretKeyField = new StringFieldEditor(PREF_KEY_AUTH_SECRETKEY, "Secret key：", getFieldEditorParent()){
+				secretKeyField = new StringFieldEditor(AuthUtil.PREF_KEY_AUTH_SECRETKEY, "Secret key：", getFieldEditorParent()){
 					@Override
 					protected void doFillIntoGrid(Composite parent, int numColumns) {
 						super.doFillIntoGrid(parent, numColumns);
@@ -73,7 +71,7 @@ public class AuthPreferenceDialog extends TitleAreaDialog {
 					}
 					
 				};
-				secretKeyField.setStringValue(secretKey);
+				secretKeyField.setStringValue(keyPair.SecretKey);
 				addField(secretKeyField);
 			}
 
@@ -109,14 +107,11 @@ public class AuthPreferenceDialog extends TitleAreaDialog {
 
 	@Override
 	protected void okPressed() {
-		Preferences pref = ConfigurationScope.INSTANCE.getNode(Activator.PLUGIN_ID);
-		pref.put(PREF_KEY_AUTH_ACCESSKEY, accessKeyField.getStringValue());
-		pref.put(PREF_KEY_AUTH_SECRETKEY, secretKeyField.getStringValue());
-
-		try {
-			pref.flush();
+		try{
+		AuthUtil.storeAccessKeyPair(accessKeyField.getStringValue(), secretKeyField.getStringValue());
 			super.okPressed();
-		} catch (BackingStoreException e) {
+		}catch(BackingStoreException e){
+			logger.error(Error.INVALID_INPUT, e);
 		}
 	}
 

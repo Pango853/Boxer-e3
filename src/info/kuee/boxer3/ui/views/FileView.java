@@ -1,4 +1,4 @@
-package info.kuee.boxer3.views;
+package info.kuee.boxer3.ui.views;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -12,7 +12,7 @@ import org.eclipse.ui.part.ViewPart;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v1.DbxEntry;
 
-import info.kuee.boxer3.auth.DropboxAuth;
+import info.kuee.boxer3.auth.AuthUtil;
 
 public class FileView extends ViewPart {
 	private Table table;
@@ -45,9 +45,9 @@ public class FileView extends ViewPart {
 
 		table.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		table.pack();
-
 		setInput();
+
+		table.pack();
 	}
 
 	private void setInput() {
@@ -56,7 +56,7 @@ public class FileView extends ViewPart {
 
 		int i=0;
 		try {
-			for(DbxEntry entry : DropboxAuth.getClient().getMetadataWithChildren("/").children){
+			for(DbxEntry entry : AuthUtil.getClient().getMetadataWithChildren("/").children){
 				TableItem item = new TableItem(table, SWT.NULL);
 				item.setBackground(i++ % 2 == 0 ? Display.getCurrent().getSystemColor(SWT.COLOR_WHITE)
 						: Display.getCurrent().getSystemColor(SWT.COLOR_GRAY));
@@ -72,5 +72,16 @@ public class FileView extends ViewPart {
 
 	@Override
 	public void setFocus() {
+	}
+
+	public String getSelection(){
+		TableItem[] items = table.getSelection();
+		if(0 < items.length){
+			// TODO Multi file support
+			TableItem item = items[0];
+			if("File".equals(item.getText(1)))
+				return item.getText(0);
+		}
+		return null;
 	}
 }

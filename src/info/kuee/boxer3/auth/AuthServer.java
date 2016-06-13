@@ -26,16 +26,22 @@ public class AuthServer {
 
 		ServletContextHandler context0 = new ServletContextHandler(ServletContextHandler.SESSIONS);
 		context0.setContextPath(AUTH_PATH);
-		context0.addServlet(new ServletHolder(new DropboxAuth()), "/*");
+		context0.addServlet(new ServletHolder(new AuthPage()), "/*");
 
 		ServletContextHandler context1 = new ServletContextHandler(ServletContextHandler.SESSIONS);
 		context1.setContextPath(CALLBACK_PATH);
-		context1.addServlet(new ServletHolder(new AuthCallback()), "/*");
+		context1.addServlet(new ServletHolder(new CallBackPage()), "/*");
 
 		ContextHandlerCollection contexts = new ContextHandlerCollection();
 		contexts.setHandlers(new Handler[] { context0, context1 });
 		server.setHandler(contexts);
 
 		server.start();
+	}
+
+	public static void stop() throws Exception {
+		if(null != server && server.isStarted()){
+			server.stop();
+		}
 	}
 }

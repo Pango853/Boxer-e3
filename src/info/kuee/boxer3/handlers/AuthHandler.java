@@ -7,7 +7,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import info.kuee.boxer3.dialogs.MyPreferenceDialog;
+import info.kuee.boxer3.dialogs.AuthPreferenceDialog;
 
 public class AuthHandler extends AbstractHandler {
 
@@ -15,7 +15,7 @@ public class AuthHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 
-		MyPreferenceDialog dlg = new MyPreferenceDialog(window.getShell());
+		AuthPreferenceDialog dlg = new AuthPreferenceDialog(window.getShell());
 		int result = dlg.open();
 		if (result == Window.OK) {
 			// TODO

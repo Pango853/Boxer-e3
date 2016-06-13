@@ -17,14 +17,14 @@ import org.osgi.service.prefs.Preferences;
 
 import info.kuee.boxer3.Activator;
 
-public class MyPreferenceDialog extends TitleAreaDialog {
-	private static final String PREF_KEY_AUTH_SECRETKEY = "auth.secret.key";
-	private static final String PREF_KEY_AUTH_ACCESSKEY = "auth.access.key";
+public class AuthPreferenceDialog extends TitleAreaDialog {
+	public static final String PREF_KEY_AUTH_SECRETKEY = "auth.secret.key";
+	public static final String PREF_KEY_AUTH_ACCESSKEY = "auth.access.key";
 	private FieldEditorPreferencePage prefPage;
 	private String accessKey, secretKey;
 	private StringFieldEditor accessKeyField, secretKeyField;
 
-	public MyPreferenceDialog(Shell parentShell) {
+	public AuthPreferenceDialog(Shell parentShell) {
 		super(parentShell);
 	}
 

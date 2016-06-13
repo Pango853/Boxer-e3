@@ -14,9 +14,15 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="Default"
             class="info.kuee.boxer3.intro.Perspective"
-            id="info.kuee.boxer3.perspective">
+            fixed="true"
+            id="info.kuee.boxer3.perspective"
+            name="Default">
+      </perspective>
+      <perspective
+            class="info.kuee.boxer3.intro.FilePerspective"
+            id="info.kuee.boxer3.perspectiveFile"
+            name="File">
       </perspective>
    </extension>
    <extension
@@ -113,6 +119,55 @@
             class="info.kuee.boxer3.handlers.AuthHandler"
             commandId="info.kuee.boxer3.commandAuth">
       </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="info.kuee.boxer3.views.FileView"
+            id="info.kuee.boxer3.viewFile"
+            name="File"
+            restorable="true">
+      </view>
+      <view
+            class="info.kuee.boxer3.views.BrowserView"
+            id="info.kuee.boxer3.viewOAuthBrowser"
+            name="OAth Browser"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="info.kuee.boxer3.perspective">
+            <view
+                  id="info.kuee.boxer3.viewOAuthBrowser"
+                  minimized="false"
+                  moveable="false"
+                  ratio="0.75"
+                  relationship="top"
+                  relative="org.eclipse.ui.editorss"
+                  visible="true">
+            </view>
+            <view
+                  id="org.eclipse.ui.console.ConsoleView"
+                  minimized="false"
+                  moveable="false"
+                  relationship="top"
+                  relative="org.eclipse.ui.editorss"
+                  visible="true">
+            </view>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="info.kuee.boxer3.perspectiveFile">
+            <view
+                  id="info.kuee.boxer3.viewFile"
+                  minimized="false"
+                  moveable="false"
+                  relationship="top"
+                  relative="org.eclipse.ui.editorss"
+                  visible="true">
+            </view>
+      </perspectiveExtension>
    </extension>
 
 </plugin>
